@@ -29,7 +29,7 @@ The services communicate through Kafka topics, enabling loose coupling, scalabil
 | Spring Kafka | 3.0.x | Kafka integration |
 | Spring Data JPA | 3.0.x | Database operations |
 | Apache Kafka | 3.6.0 | Message broker |
-| PostgreSQL | 15 | Persistent storage |
+| MySQL | 9.6.0 | Persistent storage |
 | Lombok | 1.18.30 | Boilerplate reduction |
 | Jackson | 2.15.x | JSON serialization |
 | Maven | 3.9.x | Build automation |

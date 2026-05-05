@@ -16,16 +16,22 @@ The services communicate through Kafka topics, enabling loose coupling, scalabil
 
 ## 🏗️ Architecture
 
-┌─────────────┐ ┌─────────────┐ ┌─────────────┐
-│ Client │────▶│ Order │────▶│ Kafka │
-│ │ │ Service │ │ order_topic│
-└─────────────┘ └─────────────┘ └──────┬──────┘
-│
-▼
-┌─────────────┐ ┌─────────────┐ ┌─────────────┐
-│ Client │◀────│ Shipping │◀────│ Kafka │
-│ │ │ Service │ │ Consumer │
-└─────────────┘ └─────────────┘ └─────────────┘
+sequenceDiagram
+    participant Client
+    participant OrderService
+    participant OrderDB
+    participant Kafka
+    participant ShippingService
+    participant ShippingDB
+
+    Client->>OrderService: POST /api/orders/produce
+    OrderService->>OrderDB: save order
+    OrderService->>Kafka: send to order_topic
+    Kafka-->>ShippingService: consume order
+    ShippingService->>ShippingDB: save shipping record
+    Client->>ShippingService: DELETE /api/shipping/shipping/{orderId}
+    ShippingService->>Kafka: send orderId to shipped_order_topic
+    ShippingService->>ShippingDB: delete shipping record
 
 
 
@@ -51,39 +57,6 @@ The services communicate through Kafka topics, enabling loose coupling, scalabil
 
 ## 📁 Project Structure
 
-order-shipping-kafka/
-├── order-service/
-│ ├── src/
-│ │ ├── main/
-│ │ │ ├── java/com/example/kafka/order/
-│ │ │ │ ├── OrderApplication.java
-│ │ │ │ ├── OrderController.java
-│ │ │ │ ├── OrderProducer.java
-│ │ │ │ ├── OrderRepository.java
-│ │ │ │ ├── Order.java
-│ │ │ │ └── AppConstants.java
-│ │ │ └── resources/
-│ │ │ └── application.properties
-│ │ └── test/
-│ └── pom.xml
-│
-├── shipping-service/
-│ ├── src/
-│ │ ├── main/
-│ │ │ ├── java/com/example/kafka/shipping/
-│ │ │ │ ├── ShippingApplication.java
-│ │ │ │ ├── ShippingController.java
-│ │ │ │ ├── ShippingConsumer.java
-│ │ │ │ ├── ShippedOrderIdProducer.java
-│ │ │ │ ├── ShippingRepository.java
-│ │ │ │ ├── Shipping.java
-│ │ │ │ └── AppConstants.java
-│ │ │ └── resources/
-│ │ │ └── application.properties
-│ │ └── test/
-│ └── pom.xml
-│
-└── README.md
 
 
 

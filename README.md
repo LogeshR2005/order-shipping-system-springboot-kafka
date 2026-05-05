@@ -1,9 +1,5 @@
-# 🚚 Order & Shipping Event-Driven Microservices
 
-[![Java](https://img.shields.io/badge/Java-17-blue.svg)](https://adoptium.net/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.1.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
-[![Apache Kafka](https://img.shields.io/badge/Apache%20Kafka-3.6.0-black.svg)](https://kafka.apache.org/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue.svg)](https://www.postgresql.org/)
+# 🚚 Order & Shipping Event-Driven Microservices
 
 ## 📋 Overview
 
@@ -16,24 +12,7 @@ The services communicate through Kafka topics, enabling loose coupling, scalabil
 
 ## 🏗️ Architecture
 
-sequenceDiagram
-    participant Client
-    participant OrderService
-    participant OrderDB
-    participant Kafka
-    participant ShippingService
-    participant ShippingDB
-
-    Client->>OrderService: POST /api/orders/produce
-    OrderService->>OrderDB: save order
-    OrderService->>Kafka: send to order_topic
-    Kafka-->>ShippingService: consume order
-    ShippingService->>ShippingDB: save shipping record
-    Client->>ShippingService: DELETE /api/shipping/shipping/{orderId}
-    ShippingService->>Kafka: send orderId to shipped_order_topic
-    ShippingService->>ShippingDB: delete shipping record
-
-
+<img width="1328" height="539" alt="Screenshot 2026-05-05 at 11 33 22 PM" src="https://github.com/user-attachments/assets/64d8f104-3c64-4fb6-8441-03691d9b329d" />
 
 ### Data Flow
 
@@ -57,7 +36,40 @@ sequenceDiagram
 
 ## 📁 Project Structure
 
-
+order-shipping-kafka/
+│
+├── 📂 order-service/ # Order Management Service
+│ ├── 📂 src/
+│ │ ├── 📂 main/
+│ │ │ ├── 📂 java/com/example/kafka/order/
+│ │ │ │ ├── 🚀 OrderApplication.java # Spring Boot entry point
+│ │ │ │ ├── 🎮 OrderController.java # REST API endpoints
+│ │ │ │ ├── 📤 OrderProducer.java # Kafka message producer
+│ │ │ │ ├── 🗄️ OrderRepository.java # JPA database operations
+│ │ │ │ ├── 📊 Order.java # Order entity model
+│ │ │ │ └── ⚙️ AppConstants.java # Kafka topic constants
+│ │ │ └── 📂 resources/
+│ │ │ └── application.properties # Service configuration
+│ │ └── 📂 test/ # Unit & integration tests
+│ └── 📄 pom.xml # Maven dependencies
+│
+├── 📂 shipping-service/ # Shipping Management Service
+│ ├── 📂 src/
+│ │ ├── 📂 main/
+│ │ │ ├── 📂 java/com/example/kafka/shipping/
+│ │ │ │ ├── 🚀 ShippingApplication.java # Spring Boot entry point
+│ │ │ │ ├── 🎮 ShippingController.java # REST API endpoints
+│ │ │ │ ├── 👂 ShippingConsumer.java # Kafka message consumer
+│ │ │ │ ├── 📤 ShippedOrderIdProducer.java # Kafka producer for shipped IDs
+│ │ │ │ ├── 🗄️ ShippingRepository.java # JPA database operations
+│ │ │ │ ├── 📦 Shipping.java # Shipping entity model
+│ │ │ │ └── ⚙️ AppConstants.java # Kafka topic constants
+│ │ │ └── 📂 resources/
+│ │ │ └── application.properties # Service configuration
+│ │ └── 📂 test/ # Unit & integration tests
+│ └── 📄 pom.xml # Maven dependencies
+├── 📄 .gitignore # Git ignore rules
+└── 📖 README.md # Project documentation
 
 
 

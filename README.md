@@ -36,40 +36,22 @@ The services communicate through Kafka topics, enabling loose coupling, scalabil
 
 ## 📁 Project Structure
 
-order-shipping-kafka/
-│
-├── 📂 order-service/ # Order Management Service
-│ ├── 📂 src/
-│ │ ├── 📂 main/
-│ │ │ ├── 📂 java/com/example/kafka/order/
-│ │ │ │ ├── 🚀 OrderApplication.java # Spring Boot entry point
-│ │ │ │ ├── 🎮 OrderController.java # REST API endpoints
-│ │ │ │ ├── 📤 OrderProducer.java # Kafka message producer
-│ │ │ │ ├── 🗄️ OrderRepository.java # JPA database operations
-│ │ │ │ ├── 📊 Order.java # Order entity model
-│ │ │ │ └── ⚙️ AppConstants.java # Kafka topic constants
-│ │ │ └── 📂 resources/
-│ │ │ └── application.properties # Service configuration
-│ │ └── 📂 test/ # Unit & integration tests
-│ └── 📄 pom.xml # Maven dependencies
-│
-├── 📂 shipping-service/ # Shipping Management Service
-│ ├── 📂 src/
-│ │ ├── 📂 main/
-│ │ │ ├── 📂 java/com/example/kafka/shipping/
-│ │ │ │ ├── 🚀 ShippingApplication.java # Spring Boot entry point
-│ │ │ │ ├── 🎮 ShippingController.java # REST API endpoints
-│ │ │ │ ├── 👂 ShippingConsumer.java # Kafka message consumer
-│ │ │ │ ├── 📤 ShippedOrderIdProducer.java # Kafka producer for shipped IDs
-│ │ │ │ ├── 🗄️ ShippingRepository.java # JPA database operations
-│ │ │ │ ├── 📦 Shipping.java # Shipping entity model
-│ │ │ │ └── ⚙️ AppConstants.java # Kafka topic constants
-│ │ │ └── 📂 resources/
-│ │ │ └── application.properties # Service configuration
-│ │ └── 📂 test/ # Unit & integration tests
-│ └── 📄 pom.xml # Maven dependencies
-├── 📄 .gitignore # Git ignore rules
-└── 📖 README.md # Project documentation
+├── order-service
+│   ├── AppConstants.java
+│   ├── Order.java
+│   ├── OrderApplication.java
+│   ├── OrderController.java
+│   ├── OrderProducer.java
+│   └── OrderRepository.java
+└── shipping-service
+    ├── AppConstants.java
+    ├── Shipping.java
+    ├── ShippingApplication.java
+    ├── ShippingConsumer.java
+    ├── ShippingController.java
+    ├── ShippingRepository.java
+    └── ShippedOrderIdProducer.java
+
 
 
 
